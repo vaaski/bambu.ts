@@ -1,15 +1,5 @@
 # bambu.ts
 
-To install dependencies:
+A slim wrapper around the Bambulab printer API based on [@mchrisgm's Python bambulabs_api library](https://github.com/mchrisgm/bambulabs_api).
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run src/index.ts
-```
-
-This project was created using `bun init` in bun v1.1.34. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+See [the example](example.ts) for basic usage.

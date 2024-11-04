@@ -1,9 +1,7 @@
 import { TypedEmitter } from "tiny-typed-emitter"
 
 import mqtt from "mqtt"
-import readline from "node:readline"
 
-import * as environment from "./environment"
 import type { BambuState } from "../types/bambu"
 import { merge } from "ts-deepmerge"
 
@@ -86,51 +84,22 @@ export class Bambu extends TypedEmitter<BambuEvents> {
 		this.client.publish(this.commandTopic, command)
 	}
 
+	private readonly sendCommand = (command: object) => {
+		this.sendCommandRaw(JSON.stringify(command))
+	}
+
+	private readonly commandFactory = (command: object) => {
+		return () => this.sendCommand(command)
+	}
+
 	// --------------------------------------------------------------------------------
 
-	public readonly refreshState = async () => {
-		this.sendCommandRaw(JSON.stringify({ pushing: { command: "pushall" } }))
-	}
+	public readonly refreshState = this.commandFactory({ pushing: { command: "pushall" } })
+	public readonly pausePrint = this.commandFactory({ print: { command: "pause" } })
+	public readonly stopPrint = this.commandFactory({ print: { command: "stop" } })
+	public readonly resumePrint = this.commandFactory({ print: { command: "resume" } })
 
 	public readonly setLight = (state: boolean) => {
-		this.sendCommandRaw(JSON.stringify({ system: { led_mode: state ? "on" : "off" } }))
+		this.sendCommand({ system: { led_mode: state ? "on" : "off" } })
 	}
 }
-
-const bambu = new Bambu({
-	host: environment.PRINTER_HOST,
-	password: environment.PRINTER_PASSWORD,
-	serial: environment.PRINTER_SERIAL,
-})
-
-console.log("connecting")
-bambu.on("connect", () => console.log("connected"))
-bambu.on("disconnect", () => console.log("disconnect"))
-bambu.on("state", (state) => {
-	console.log(state.print.nozzle_temper)
-	console.log(state.print.lights_report)
-})
-
-readline.emitKeypressEvents(process.stdin)
-process.stdin.setRawMode(true)
-process.stdin.on("keypress", async (_, key) => {
-	switch (key.name) {
-		case "1": {
-			bambu.setLight(true)
-			break
-		}
-		case "2": {
-			bambu.setLight(false)
-			break
-		}
-		case "3": {
-			bambu.refreshState()
-			break
-		}
-	}
-
-	if (key.ctrl && key.name === "c") {
-		// eslint-disable-next-line unicorn/no-process-exit
-		process.exit(0)
-	}
-})

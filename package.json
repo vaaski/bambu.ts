@@ -1,7 +1,5 @@
 {
 	"name": "bambu.ts",
-	"type": "module",
-	"module": "src/index.ts",
 	"version": "0.0.1",
 	"keywords": [
 		"3d-printer",
@@ -9,18 +7,16 @@
 		"mqtt",
 		"bambulab"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vaaski/bambu.ts"
+	},
 	"license": "MIT",
 	"author": {
 		"name": "vaaski",
 		"email": "admin@vaa.ski"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/vaaski/bambu.ts"
-	},
-	"files": [
-		"dist"
-	],
+	"type": "module",
 	"exports": {
 		".": {
 			"import": "./dist/index.mjs",
@@ -28,18 +24,28 @@
 		}
 	},
 	"main": "./dist/index.cjs",
+	"module": "src/index.ts",
 	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
 	"scripts": {
+		"build": "unbuild",
+		"dev": "tsx -r dotenv/config --watch example.ts",
 		"format": "prettier -w .",
 		"lint": "eslint .",
-		"dev": "tsx -r dotenv/config --watch example.ts",
-		"start": "tsx -r dotenv/config example.ts",
-		"build": "unbuild",
-		"prepublishOnly": "unbuild"
+		"prepublishOnly": "unbuild",
+		"start": "tsx -r dotenv/config example.ts"
+	},
+	"dependencies": {
+		"mqtt": "^5.10.1",
+		"tiny-typed-emitter": "^2.1.0",
+		"ts-deepmerge": "^7.0.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.14.0",
 		"@types/bun": "latest",
+		"dotenv": "^16.4.5",
 		"eslint": "^9.14.0",
 		"eslint-plugin-unicorn": "^56.0.0",
 		"globals": "^15.11.0",
@@ -50,11 +56,5 @@
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
-	},
-	"dependencies": {
-		"dotenv": "^16.4.5",
-		"mqtt": "^5.10.1",
-		"tiny-typed-emitter": "^2.1.0",
-		"ts-deepmerge": "^7.0.1"
 	}
 }

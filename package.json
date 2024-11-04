@@ -18,11 +18,24 @@
 		"type": "git",
 		"url": "https://github.com/vaaski/bambu.ts"
 	},
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"main": "./dist/index.cjs",
+	"types": "./dist/index.d.ts",
 	"scripts": {
 		"format": "prettier -w .",
 		"lint": "eslint .",
 		"dev": "tsx -r dotenv/config --watch example.ts",
-		"start": "tsx -r dotenv/config example.ts"
+		"start": "tsx -r dotenv/config example.ts",
+		"build": "unbuild",
+		"prepublishOnly": "unbuild"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.14.0",
@@ -32,7 +45,8 @@
 		"globals": "^15.11.0",
 		"prettier": "^3.3.3",
 		"tsx": "^4.19.2",
-		"typescript-eslint": "^8.12.2"
+		"typescript-eslint": "^8.12.2",
+		"unbuild": "^2.0.0"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"

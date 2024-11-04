@@ -2,6 +2,22 @@
 	"name": "bambu.ts",
 	"type": "module",
 	"module": "src/index.ts",
+	"version": "0.0.1",
+	"keywords": [
+		"3d-printer",
+		"api",
+		"mqtt",
+		"bambulab"
+	],
+	"license": "MIT",
+	"author": {
+		"name": "vaaski",
+		"email": "admin@vaa.ski"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vaaski/bambu.ts"
+	},
 	"scripts": {
 		"format": "prettier -w .",
 		"lint": "eslint .",

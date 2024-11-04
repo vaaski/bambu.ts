@@ -5,6 +5,8 @@ import mqtt from "mqtt"
 import type { BambuState } from "../types/bambu"
 import { merge } from "ts-deepmerge"
 
+export type { BambuState } from "../types/bambu"
+
 export type BambuConstructorOptions = {
 	host: string
 	port?: string | number

@@ -20,6 +20,10 @@ readline.emitKeypressEvents(process.stdin)
 process.stdin.setRawMode(true)
 process.stdin.on("keypress", async (_, key) => {
 	switch (key.name) {
+		case "0": {
+			bambu.refreshState()
+			break
+		}
 		case "1": {
 			bambu.setLight(true)
 			break
@@ -29,7 +33,11 @@ process.stdin.on("keypress", async (_, key) => {
 			break
 		}
 		case "3": {
-			bambu.refreshState()
+			bambu.setFanSpeed(1)
+			break
+		}
+		case "4": {
+			bambu.setFanSpeed(0)
 			break
 		}
 	}

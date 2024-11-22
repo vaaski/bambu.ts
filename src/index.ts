@@ -96,6 +96,10 @@ export class Bambu extends TypedEmitter<BambuEvents> {
 
 	// --------------------------------------------------------------------------------
 
+	public readonly sendGCode = (gcode: string) => {
+		this.sendCommand({ print: { command: "gcode_line", param: gcode } })
+	}
+
 	public readonly refreshState = this.commandFactory({ pushing: { command: "pushall" } })
 	public readonly pausePrint = this.commandFactory({ print: { command: "pause" } })
 	public readonly stopPrint = this.commandFactory({ print: { command: "stop" } })
@@ -103,5 +107,10 @@ export class Bambu extends TypedEmitter<BambuEvents> {
 
 	public readonly setLight = (state: boolean) => {
 		this.sendCommand({ system: { led_mode: state ? "on" : "off" } })
+	}
+
+	public readonly setFanSpeed = (speed: number, fanID = 1) => {
+		const adjustedSpeed = Math.round(255 * speed)
+		this.sendGCode(`M106 P${fanID} S${adjustedSpeed}`)
 	}
 }
